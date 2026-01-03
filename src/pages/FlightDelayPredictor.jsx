@@ -38,9 +38,14 @@ export default function FlightDelayPredictor() {
       if (!parsed) throw new Error('Invalid time format. Please enter time as HH:MM (24-hour) or HH:MM AM/PM.');
       const { hours, minutes } = parsed;
       const d = new Date(date);
-      d.setHours(hours, minutes, 0, 0);
-      if (isNaN(d.getTime())) throw new Error('Invalid date or time');
-      return d.toISOString();
+      
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      const h = String(hours).padStart(2, '0');
+      const m = String(minutes).padStart(2, '0');
+      
+      return `${year}-${month}-${day}T${h}:${m}:00.000Z`;
     };
 
     try {
