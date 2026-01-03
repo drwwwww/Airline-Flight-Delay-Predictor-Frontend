@@ -1,20 +1,24 @@
-# Base44 App
+# Flight Predictor Frontend
 
+Vite + React single-page app for the Flight Delay Predictor. Connects to the FastAPI backend via `VITE_API_URL`.
 
-This app was created automatically by Base44.
-It's a Vite+React app that communicates with the Base44 API.
-
-## Running the app
+## Local dev
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Building the app
+Create a `.env.local` or `.env.production` with:
+
+```
+VITE_API_URL=http://localhost:8000
+```
+
+## Production build
 
 ```bash
 npm run build
 ```
 
-For more information and support, please contact Base44 support at app@base44.com.
+Deploy easily on Vercel/Netlify. Set `VITE_API_URL` to your backend URL.
