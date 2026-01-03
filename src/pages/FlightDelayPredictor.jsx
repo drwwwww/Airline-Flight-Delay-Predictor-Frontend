@@ -60,8 +60,14 @@ export default function FlightDelayPredictor() {
       });
 
       if (!res.ok) {
-        const txt = await res.text();
-        throw new Error(txt || res.statusText);
+        let errorDetail = 'Unable to process prediction.';
+        try {
+          const errorData = await res.json();
+          errorDetail = errorData.detail || errorDetail;
+        } catch {
+          errorDetail = res.statusText || errorDetail;
+        }
+        throw new Error(errorDetail);
       }
 
       const data = await res.json();
@@ -70,7 +76,11 @@ export default function FlightDelayPredictor() {
       setCurrentScreen('results');
     } catch (err) {
       console.error(err);
-      toast({ title: 'Prediction failed', description: err.message || 'Network error' });
+      toast({
+        title: 'Flight Not Found',
+        description: err.message || 'Unable to process prediction. Please try again.',
+        variant: 'destructive'
+      });
     } finally {
       setLoading(false);
     }
